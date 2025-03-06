@@ -44,7 +44,7 @@ def add_contato(conexao, cursor):
             print('\nE-mail inválido, tente novamente.')
     
     try:
-        cursor.execute("INSERT INTO contatos (nome, telefone, email) VALUES (?, ?, ?)", (nome, telefone_formatado, email))
+        cursor.execute("INSERT INTO contatos (nome, telefone, email) VALUES (?, ?, ?)", (nome, telefone_formatado, email)) #o insert into salva o dados - no canso, insere eles, né?
         conexao.commit()
         print('\nContato adicionado com sucesso!')
     except sqlite3.IntegrityError:
@@ -52,7 +52,7 @@ def add_contato(conexao, cursor):
 
 def mod_contato(conexao, cursor):
     nome = input('Digite o nome do contato que deseja modificar: ')
-    cursor.execute("SELECT * FROM contatos WHERE nome = ?", (nome,))
+    cursor.execute("SELECT * FROM contatos WHERE nome = ?", (nome,)) # O select busca o dado em especifico dentro do banco de dados 
     contato = cursor.fetchone()
     
     if not contato:
@@ -64,7 +64,7 @@ def mod_contato(conexao, cursor):
     
     if decisao == '1':
         novo_nome = input('Digite o novo nome: ').strip()
-        cursor.execute("UPDATE contatos SET nome = ? WHERE nome = ?", (novo_nome, nome))
+        cursor.execute("UPDATE contatos SET nome = ? WHERE nome = ?", (novo_nome, nome)) #o uptade atualiza o dado selecionado
     elif decisao == '2':
         while True:
             novo_email = input('Digite o novo e-mail do contato: ').strip()
@@ -75,7 +75,7 @@ def mod_contato(conexao, cursor):
                 print('E-mail inválido, tente novamente.')
     elif decisao == '3':
         novo_telefone = input('Digite o novo telefone do contato: ')
-        cursor.execute("UPDATE contatos SET telefone = ? WHERE nome = ?", (validar_telefone(novo_telefone), nome))
+        cursor.execute("UPDATE contatos SET telefone = ? WHERE nome = ?", (validar_telefone(novo_telefone), nome)) 
     elif decisao == '4':
         print('\nVoltando ao menu inicial...\n')
         return
@@ -88,12 +88,12 @@ def mod_contato(conexao, cursor):
 
 def remover_contato(conexao, cursor):
     nome = input('Digite o nome do contato que deseja remover: ')
-    cursor.execute("DELETE FROM contatos WHERE nome = ?", (nome,))
+    cursor.execute("DELETE FROM contatos WHERE nome = ?", (nome,)) #bem, npé o delete deleta kkkk
     conexao.commit()
     print('\nContato removido da agenda.')
 
 def listar_contatos(cursor):
-    cursor.execute("SELECT * FROM contatos")
+    cursor.execute("SELECT * FROM contatos") 
     contatos = cursor.fetchall()
     
     if not contatos:
